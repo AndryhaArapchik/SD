@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace LSD
 {
+    //Класс представляет свойства точки и основные мотеды работы с ней.
+    //содержит так же перечень других точек,  с которыми даннаяя точка имеет связь.
     public class Points
     {
         public string Description { get; set; }
@@ -30,6 +32,8 @@ namespace LSD
         public Points(int X, int Y, string Description) : this(X, Y, null, Description) { }
         public Points(string Description) : this(0, 0, null, Description) { }
         public Points() : this(0, 0, null, "none") { }
+
+        //добовляет связь данной точки с другой
         public bool Connect(Points Point)
         {
             foreach (Points item in ConnectingPoints)
@@ -42,6 +46,7 @@ namespace LSD
             ConnectingPoints.Add(Point);
             return true;
         }
+        //разъеденяет точки
         public bool Disconnect(Points Point)
         {
             foreach (Points item in ConnectingPoints)
@@ -54,6 +59,7 @@ namespace LSD
             }
             return false;
         }
+        //проверяет связанна ли точка с данной
         public bool SearchPoint(Points Point)
         {
             foreach (Points item in ConnectingPoints)

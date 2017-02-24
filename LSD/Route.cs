@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LSD
 {
+    //Класс реализует маршрут и все необходимые методы работы с ним.
     public class Route
     {
         public Guid Id { get; private set; }
@@ -27,6 +28,7 @@ namespace LSD
                 int y = 0;
                 M.IntPoint.TryGetValue(TransitPointsList[nextPoint], out y);
                 Distance += M.Matrix[x, y];
+                prevPoint++;
             }
         }
         public override string ToString()

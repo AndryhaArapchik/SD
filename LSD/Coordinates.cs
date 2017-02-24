@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LSD
 {
+    //Класс содержит координаты точки
     public class Coordinates
     {
         public int X { get; set; }

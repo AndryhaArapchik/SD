@@ -11,67 +11,45 @@ namespace SD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("SD v1.0 \n23.02.2017");
+            Tools Tool = new Tools(); //объект управления инструментами построения маршрута
 
-            Tools Tool = new Tools();
+            List<Points> PointsList = new List<Points>(); //список точек
 
-            List<Points> PointsList = new List<Points>();
-
+            //далее производим инициализацию и заполнение данных точек рандомными значениями
             Random R = new Random();
-            for (int i = 0; i < 12; i++)
+
+            int CountPoints = 5; //количество точек
+            int MaxValueCoord = 10; //количество ед. в координатной сетке
+
+            //инициализация и заполнение данных точек
+            for (int i = 0; i < CountPoints; i++)
             {
-                int X = R.Next(0, 100);
-                int Y = R.Next(0, 100);
+                int X = R.Next(0, MaxValueCoord);
+                int Y = R.Next(0, MaxValueCoord);
                 Points Point = new Points(X, Y, i.ToString());
                 PointsList.Add(Point);
+                Console.WriteLine("Points information:");
                 Console.WriteLine(i + ". X: " + Point.Position.X + "; Y: " 
                     + Point.Position.Y + "; Id: " + Point.Id + ';');
             }
-            PointsList[0].ConnectingPoints.Add(PointsList[1]);
-            PointsList[0].ConnectingPoints.Add(PointsList[4]);
-            PointsList[0].ConnectingPoints.Add(PointsList[6]);
+            //обеспечиваем связь каждой точки с каждой
+            foreach (Points item in PointsList)
+            {
+                foreach (Points TP in PointsList)
+                {
+                    item.ConnectingPoints.Add(TP);
+                }
+            }
 
-            PointsList[1].ConnectingPoints.Add(PointsList[0]);
-            PointsList[1].ConnectingPoints.Add(PointsList[5]);
-            PointsList[1].ConnectingPoints.Add(PointsList[2]);
+           
+            List<Route> MinimalPath = Tool.SearchPathsWithAllPoints(PointsList[0], PointsList[3], PointsList);
 
-            PointsList[2].ConnectingPoints.Add(PointsList[1]);
-            PointsList[2].ConnectingPoints.Add(PointsList[9]);
-            PointsList[2].ConnectingPoints.Add(PointsList[3]);
+            foreach (Route item in MinimalPath)
+            {
+                Console.WriteLine(item.ToString());
+            }
+            Console.WriteLine("\n" + Tool.SearchMinimalPathWithAllPoints(PointsList[0], PointsList[3], PointsList).ToString());
 
-            PointsList[3].ConnectingPoints.Add(PointsList[2]);
-            PointsList[3].ConnectingPoints.Add(PointsList[10]);
-
-            PointsList[4].ConnectingPoints.Add(PointsList[0]);
-            PointsList[4].ConnectingPoints.Add(PointsList[5]);
-            PointsList[4].ConnectingPoints.Add(PointsList[11]);
-
-            PointsList[5].ConnectingPoints.Add(PointsList[1]);
-            PointsList[5].ConnectingPoints.Add(PointsList[4]);
-            PointsList[5].ConnectingPoints.Add(PointsList[10]);
-
-            PointsList[6].ConnectingPoints.Add(PointsList[0]);
-            PointsList[6].ConnectingPoints.Add(PointsList[10]);
-
-            PointsList[7].ConnectingPoints.Add(PointsList[11]);
-
-            PointsList[8].ConnectingPoints.Add(PointsList[11]);
-
-            PointsList[9].ConnectingPoints.Add(PointsList[2]);
-
-            PointsList[10].ConnectingPoints.Add(PointsList[3]);
-            PointsList[10].ConnectingPoints.Add(PointsList[6]);
-            PointsList[10].ConnectingPoints.Add(PointsList[5]);
-
-            PointsList[11].ConnectingPoints.Add(PointsList[7]);
-            PointsList[11].ConnectingPoints.Add(PointsList[8]);
-            PointsList[11].ConnectingPoints.Add(PointsList[4]);
-
-            Console.WriteLine();
-
-            Route MinimalPath = Tool.SearchMinimalPath(PointsList[0], PointsList[5], PointsList);
-
-            Console.WriteLine(MinimalPath.ToString());
             Console.ReadKey();
         }
     }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LSD
 {
+    //Клас реализует матрицу расстояний и основные методы работы с ней
     public class MatrixDistances
     {
         public double[,] Matrix;
@@ -24,7 +25,6 @@ namespace LSD
                 }
             }
         }
-
         public override string ToString()
         {
             string Result = " ";
